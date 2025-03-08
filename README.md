@@ -10,4 +10,4 @@ I purchased the ZiPS data via a subscription from FanGraphs. I used these projec
 
 It is important to note that the projections are the median projection from many simulations. The median is not always the best way to describe a distribution. 
 
-![image info](/Users/John/Documents/allProjects/data_hidden/FBB_Points/clean/BiModal.png)
+![BiModal](https://github.com/user-attachments/assets/e07814ac-f84f-4563-8e87-6e9583952584)
