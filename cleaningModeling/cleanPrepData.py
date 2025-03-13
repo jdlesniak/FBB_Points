@@ -110,7 +110,7 @@ def blownSavesEstimates(data, estimator):
     modelData = modelData[['ERA', 'SV', 'HLD', 'IP', 'HR', 'BB', 'SO', 'ReliefApps']]
 
     # use estimator to make predictions
-    modelData['BS'] = estimator.predict(modelData)
+    modelData['BS'] = np.round(estimator.predict(modelData))
 
     ## join to data, making the output dataset
     output = data.merge(modelData[['BS']], how = 'left',
@@ -149,8 +149,8 @@ def cleanBatters(dataDir, fileName):
             battersAll = pd.concat([battersAll, battersTemp])
 
 
-    return battersAll[['Name', 'Team', 'POS', 'PlayerId', 'H', '1B',
-                       '2B', '3B', 'HR', 'R', 'RBI', 'SO', 'SB', 'CS']]
+    return battersAll[['Name', 'Team', 'POS', 'PlayerId', '1B',
+                       '2B', '3B', 'HR', 'R', 'RBI', 'SO', 'SB', 'CS', 'HBP']]
 
 def cleanPitchers(dataDir, fileName, estimator):
     pitcherTypes = ['SP' ,'RP']
@@ -158,8 +158,8 @@ def cleanPitchers(dataDir, fileName, estimator):
     pitchersAll = cleanAddPOS(pitcherTypes, dataDir, fileName)
     pitchersClean = blownSavesEstimates(pitchersAll, estimator)
     
-    return pitchersClean[['Name', 'Team', 'POS', 'W', 'IP', 'HLD', 'SV',
-                          'BS', 'SO', 'ER']]
+    return pitchersClean[['Name', 'Team', 'POS', 'PlayerId', 'W', 'IP', 'HLD', 'SV',
+                          'SO', 'ER','BS']]
 
 
 def main():
@@ -172,10 +172,16 @@ def main():
     ## produce the cleaned batters dataset
     battersClean = cleanBatters(vars['data_raw'], vars['filename'])
 
+    allClean = battersClean.merge(pitchersClean, how = 'outer', on = ['Name', 'Team', 'POS', 'PlayerId'], suffixes = ('_bat', '_pit'))
+    allClean.fillna(0, inplace = True)
+
     pitchersClean.to_csv(vars['data_clean'] + 'pitchersClean.csv')
     battersClean.to_csv(vars['data_clean'] + 'battersClean.csv')
+    allClean.to_csv(vars['data_clean'] + 'allClean.csv')
+
     writePickle(vars['data_clean'], 'pitchersClean.pkl', pitchersClean)
-    writePickle(vars['data_clean'], 'battersClean.pkl', pitchersClean)
+    writePickle(vars['data_clean'], 'battersClean.pkl', battersClean)
+    writePickle(vars['data_clean'], 'allClean.pkl', allClean)
 
 if __name__ == '__main__':
     main()
