@@ -66,7 +66,7 @@ def main():
         st.write(df.values.shape)
         st.write(values_array.shape)
         
-        points = np.matmul(df.to_numpy(), values_array)
+        points = np.matmul(df.to_numpy(dtype = float), values_array)
         print(points.shape)
         
         #df = output.copy()
