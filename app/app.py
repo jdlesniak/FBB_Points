@@ -45,11 +45,25 @@ def main():
                       value=float(pitcher_defaults[i]), step=0.5, format="%.1f") for i in range(7)]
 
     if st.button("Submit"):
+        ## append the values together
         values_array = np.array(batter_values + pitcher_values)
-        print(values_array)
+        
+        ## calcualte the points
         df = calculate_points(values_array, nTeams, local)
-        st.write("### Captured Values Table:")
+        
+        ## log the df in the session_state
+        st.session_state.df = df
+        ## write the dataframe with points to the app
+        st.write("### ZiPS Powered Projections:")
+        
+    if "df" in st.session_state:
+        df = st.session_state.df
+        name_filter = st.text_input("Filter by Name:")
+        if name_filter:
+
+            df = df[df['Name'].str.contains(name_filter, case=False, na=False)]
         st.dataframe(df)
+        
 
 if __name__ == "__main__":
     main()
