@@ -175,9 +175,9 @@ def main():
     allClean = battersClean.merge(pitchersClean, how = 'outer', on = ['Name', 'Team', 'POS', 'PlayerId'], suffixes = ('_bat', '_pit'))
     allClean.fillna(0, inplace = True)
 
-    pitchersClean.to_csv(vars['data_clean'] + 'pitchersClean.csv')
-    battersClean.to_csv(vars['data_clean'] + 'battersClean.csv')
-    allClean.to_csv(vars['data_clean'] + 'allClean.csv')
+    pitchersClean.to_csv(vars['data_clean'] + 'pitchersClean.csv', index = False)
+    battersClean.to_csv(vars['data_clean'] + 'battersClean.csv', index = False)
+    allClean.to_csv(vars['data_clean'] + 'allClean.csv', index = False)
 
     writePickle(vars['data_clean'], 'pitchersClean.pkl', pitchersClean)
     writePickle(vars['data_clean'], 'battersClean.pkl', battersClean)
