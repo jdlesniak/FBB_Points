@@ -179,6 +179,7 @@ def main():
     pitFan = pd.read_csv(vars['data_raw']+ 'fangraphs-leaderboard-projections_pit_fantasy.csv')[['PlayerId', 'ADP']]
 
     allClean = allClean.merge(pd.concat([batFan,pitFan]).drop_duplicates(), on = 'PlayerId', how = 'left')
+    allClean['ADP'] = round(allClean['ADP'],1)
 
     pitchersClean.to_csv(vars['data_clean'] + 'pitchersClean.csv', index = False)
     battersClean.to_csv(vars['data_clean'] + 'battersClean.csv', index = False)

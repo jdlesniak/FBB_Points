@@ -51,6 +51,7 @@ def calculate_points(values_array, nTeams, local):
     ## add in rank and round
     output['Rank'] = output.index + 1
     output['Projected Round'] = np.ceil(output['Rank']/nTeams)
+    output['ADP'] = round(output['ADP'],1)
 
 
     return output[['Name', 'Team', 'POS', 'Points', 'Rank','Projected Round', 'ADP']]
