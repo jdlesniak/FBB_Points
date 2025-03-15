@@ -150,7 +150,7 @@ def cleanBatters(dataDir, fileName):
 
 
     return battersAll[['Name', 'Team', 'POS', 'PlayerId', '1B',
-                       '2B', '3B', 'HR', 'R', 'RBI', 'SO', 'SB', 'CS', 'HBP']]
+                       '2B', '3B', 'HR', 'R', 'RBI', 'BB', 'SB', 'CS', 'HBP']]
 
 def cleanPitchers(dataDir, fileName, estimator):
     pitcherTypes = ['SP' ,'RP']
@@ -174,6 +174,11 @@ def main():
 
     allClean = battersClean.merge(pitchersClean, how = 'outer', on = ['Name', 'Team', 'POS', 'PlayerId'], suffixes = ('_bat', '_pit'))
     allClean.fillna(0, inplace = True)
+
+    batFan = pd.read_csv(vars['data_raw']+ 'fangraphs-leaderboard-projections_bat_fantasy.csv')[['PlayerId', 'ADP']]
+    pitFan = pd.read_csv(vars['data_raw']+ 'fangraphs-leaderboard-projections_pit_fantasy.csv')[['PlayerId', 'ADP']]
+
+    allClean = allClean.merge(pd.concat([batFan,pitFan]).drop_duplicates(), on = 'PlayerId', how = 'left')
 
     pitchersClean.to_csv(vars['data_clean'] + 'pitchersClean.csv', index = False)
     battersClean.to_csv(vars['data_clean'] + 'battersClean.csv', index = False)
