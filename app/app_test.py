@@ -47,7 +47,7 @@ def main():
 
     if st.button("Submit"):
         ## append the values together
-        values_array = np.array(batter_values + pitcher_values).reshape(len(values_array),1)
+        values_array = np.array(batter_values + pitcher_values)
         print(values_array.shape)
         
         ## calcualte the points
