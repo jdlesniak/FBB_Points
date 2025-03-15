@@ -56,6 +56,7 @@ def main():
         st.session_state.df = df
         ## write the dataframe with points to the app
         st.write("### ZiPS Powered Projections:")
+        st.dataframe(df)
         
 
 if __name__ == "__main__":
