@@ -48,13 +48,13 @@ def main():
     if st.button("Submit"):
         ## append the values together
         values_array = np.array(batter_values + pitcher_values)
+        values_array = values_array.reshape(17,1)
         print(values_array.shape)
         
         ## calcualte the points
         df = query_data(local)
 
 
-        print(fbb.head())
         ## hold out key columns for a return df
         output = df[['Name','Team','POS','ADP']]
 
