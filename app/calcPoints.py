@@ -40,7 +40,7 @@ def calculate_points(values_array, nTeams, local):
     output = fbb[['Name','Team','POS','ADP']]
 
     ## grab the values as a matrix and multiply to get point values
-    projMat = fbb.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1).values
+    projMat = fbb.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1).to_numpy(dtype=float)
     points = np.matmul(projMat, values_array.reshape(len(values_array),1))
     output['Points'] = points
 
