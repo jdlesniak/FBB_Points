@@ -29,7 +29,7 @@ def main():
         </style>
     """, unsafe_allow_html=True)
     st.write("Input Batter Values.")
-    # Creating 8 number input fields in a single row
+    # Creating 10 number input fields in a single row
     bcols = st.columns(10)
     batter_labels = ["1B", "2B", "3B", "HR", "R", "RBI", "BB", "SB", "CS", "HBP"]
     batter_defaults = [1,2,3,4,1,2,.5,1,-1,.5]
@@ -55,13 +55,37 @@ def main():
         st.session_state.df = df
         ## write the dataframe with points to the app
         st.write("### ZiPS Powered Projections:")
-        
-    if "df" in st.session_state:
-        df = st.session_state.df
-        name_filter = st.text_input("Filter by Name:")
-        if name_filter:
 
+
+    if "df" in st.session_state:
+        ## set session sate for df
+        df = st.session_state.df
+
+        ## define the ALL values for select boxes
+        team_options = ["All"] + sorted(df['Team'].dropna().unique().tolist())
+        
+        
+        # Define filters with session state tracking
+        name_filter = st.text_input("Filter by Name:", value=st.session_state.get("name_filter", ""))
+        selectboxcols = st.columns(2)
+        team_filter = selectboxcols[0].selectbox("Filter by Team:", team_options, index=team_options.index(st.session_state.get("team_filter", "All")))
+
+        # Reset Filters Button
+        if st.button("Reset Filters"):
+            st.session_state.name_filter = ""
+            st.session_state.team_filter = "All"
+            st.rerun()
+
+        # Apply filters and store the selections
+        st.session_state.name_filter = name_filter
+        st.session_state.team_filter = team_filter
+
+        if name_filter:
             df = df[df['Name'].str.contains(name_filter, case=False, na=False)]
+        if team_filter != "All":
+            df = df[df['Team'] == team_filter]
+        
+        ## show dataframe
         st.dataframe(df)
         
 
