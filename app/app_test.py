@@ -62,7 +62,7 @@ def main():
         projMat = df.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1).values
         print(projMat.shape)
         
-        #points = np.matmul(projMat, values_array.reshape(len(values_array),1))
+        points = np.matmul(projMat, values_array.reshape(len(values_array),1))
         
         df = output.copy()
         ## log the df in the session_state
