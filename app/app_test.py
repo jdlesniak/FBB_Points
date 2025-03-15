@@ -59,7 +59,7 @@ def main():
         #output = df[['Name','Team','POS','ADP']]
 
         ## grab the values as a matrix and multiply to get point values
-        df.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1,inplace = True).values
+        df.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1,inplace = True)
         st.write(df.values)
 
         st.write(values_array)
