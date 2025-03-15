@@ -2,7 +2,7 @@ import os
 import sys
 import requests
 
-from dotenv import load_dotenv
+
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -11,6 +11,7 @@ def query_data(local):
 
     ## get params to access data
     if local:
+        from dotenv import load_dotenv
         API = os.getenv("GS_API_KEY")
         FBB_SHEET_ID = os.getenv("FBB_SHEET_ID")
         FBB_RANGE = os.getenv("FBB_RANGE")
