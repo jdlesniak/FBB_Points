@@ -20,12 +20,10 @@ def query_data(local):
         # API Endpoint
         URL = f"https://sheets.googleapis.com/v4/spreadsheets/{FBB_SHEET_ID}/values/{FBB_RANGE}?key={API}"
 
-        print(URL)
         # Fetch Data
         response = requests.get(URL)
         print(response)
         data = response.json()
-        print(data)
         # Convert to Pandas DataFrame
         if "values" in data:
             values = data["values"]

@@ -60,9 +60,10 @@ def main():
 
         ## grab the values as a matrix and multiply to get point values
         projMat = df.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1).values
-        print(projMat.shape)
+        print(projMat[:,1])
         
-        #points = np.matmul(projMat, values_array.reshape(len(values_array),1))
+        points = np.matmul(projMat, values_array)
+        print(points.shape)
         
         #df = output.copy()
         ## log the df in the session_state
