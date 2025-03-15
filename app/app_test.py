@@ -47,11 +47,24 @@ def main():
 
     if st.button("Submit"):
         ## append the values together
-        values_array = np.array(batter_values + pitcher_values)
+        values_array = np.array(batter_values + pitcher_values).reshape(len(values_array),1)
+        print(values_array.shape)
         
         ## calcualte the points
         df = query_data(local)
+
+
+        print(fbb.head())
+        ## hold out key columns for a return df
+        output = df[['Name','Team','POS','ADP']]
+
+        ## grab the values as a matrix and multiply to get point values
+        projMat = df.drop(['Name','Team','POS','PlayerId', 'ADP'], axis = 1).values
+        print(projMat.shape)
         
+        #points = np.matmul(projMat, values_array.reshape(len(values_array),1))
+        
+        df = output.copy()
         ## log the df in the session_state
         st.session_state.df = df
         ## write the dataframe with points to the app
