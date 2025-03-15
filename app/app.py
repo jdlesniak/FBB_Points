@@ -63,27 +63,36 @@ def main():
 
         ## define the ALL values for select boxes
         team_options = ["All"] + sorted(df['Team'].dropna().unique().tolist())
+        pos_options = ['All', 'C', '1B', '2B', '3B', 'SS', 'OF', 'SP', 'RP']
         
         
         # Define filters with session state tracking
         name_filter = st.text_input("Filter by Name:", value=st.session_state.get("name_filter", ""))
         selectboxcols = st.columns(2)
         team_filter = selectboxcols[0].selectbox("Filter by Team:", team_options, index=team_options.index(st.session_state.get("team_filter", "All")))
+        pos_filter = selectboxcols[1].selectbox("Filter by Position:", pos_options, index=pos_options.index(st.session_state.get("pos_filter", "All")))
 
         # Reset Filters Button
         if st.button("Reset Filters"):
             st.session_state.name_filter = ""
             st.session_state.team_filter = "All"
+            st.session_state.pos_filter = "All"
             st.rerun()
 
-        # Apply filters and store the selections
-        st.session_state.name_filter = name_filter
-        st.session_state.team_filter = team_filter
+        # Load session state or set defaults
+        if "name_filter" not in st.session_state:
+            st.session_state.name_filter = ""
+        if "team_filter" not in st.session_state:
+            st.session_state.team_filter = "All"
+        if "pos_filter" not in st.session_state:
+            st.session_state.pos_filter = "All"
 
         if name_filter:
             df = df[df['Name'].str.contains(name_filter, case=False, na=False)]
         if team_filter != "All":
             df = df[df['Team'] == team_filter]
+        if pos_filter != "All":
+            df = df[df['POS'].str.contains(pos_filter, case = False, na = False)]
         
         ## show dataframe
         st.dataframe(df)
