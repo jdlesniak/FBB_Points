@@ -66,8 +66,8 @@ def main():
         st.write(df.values.shape)
         st.write(values_array.shape)
         
-        #points = np.matmul(projMat, values_array)
-        #print(points.shape)
+        points = np.matmul(df.values, values_array)
+        print(points.shape)
         
         #df = output.copy()
         ## log the df in the session_state
