@@ -13,6 +13,7 @@ from calcPoints import *
 
 def main():
     local = os.path.isfile('/Users/John/Documents/allProjects/data_hidden/FBB_Points/clean/allClean.csv')
+    print(local)
     nTeams = 14
     
     st.title("Fantasy Baseball Points Projections")
