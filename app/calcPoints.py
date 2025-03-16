@@ -35,7 +35,6 @@ def query_data(local):
 def calculate_points(values_array, nTeams, local):
     ## get the data
     fbb = query_data(local)
-    print(fbb.head())
     ## hold out key columns for a return df
     output = fbb[['Name','Team','POS','ADP']]
 

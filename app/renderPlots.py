@@ -77,12 +77,12 @@ def build_POS_plots(df, league_info):
     for key, value in league_info.items():
     ## pitcher plot
         if key in ["SP", "RP"]:
-            output[key], pitchers = get_indiv_plot_trace(points, key, value, nTeams, ymin, ymax, pitchers)
+            output[key], pitchers = get_indiv_plot_trace(df, key, value, nTeams, ymin, ymax, pitchers)
             pit_x_max = max(pit_x_max, value)
             
         ## batter plot
         elif key != 'nTeams':
-            output[key], batters = get_indiv_plot_trace(points, key, value, nTeams, ymin, ymax, batters)
+            output[key], batters = get_indiv_plot_trace(df, key, value, nTeams, ymin, ymax, batters)
             bat_x_max = max(bat_x_max, value)
         
         ## not plot data
@@ -99,7 +99,7 @@ def build_POS_plots(df, league_info):
                             )
     
     ## update pitcher plot
-    pitchers.update_layout(title = "Points by Batter Position",
+    batters.update_layout(title = "Points by Batter Position",
                             yaxis_title = 'Points',
                             xaxis_title = 'Order',
                             xaxis_range = [1, round(bat_x_max*nTeams*1.2)],

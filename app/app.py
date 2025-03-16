@@ -15,7 +15,7 @@ from renderPlots import *
 
 def main():
     local = os.path.isfile('/Users/John/Documents/allProjects/data_hidden/FBB_Points/clean/allClean.csv')
-    print(local)
+    #print(local)
     
     st.title("Fantasy Baseball Points Projections via ZiPS DC")
     st.markdown("""This app uses ZiPS DC projections to project player points based on your league's scoring settings and number of teams. 
@@ -145,8 +145,15 @@ def main():
         
         ## show dataframe
         st.dataframe(df, hide_index = True)
+        
+        ## get the pos plots
+        pos_plots = build_POS_plots(df, league_info)
+        
+        ## build the static rows
         static_plots_row1 = st.columns(2)
         static_plots_row2 = st.columns(2)
+        
+        ## set the first static row
         static1 = points_by_round(df, league_info['nTeams'])
         static2 = render_distplot(df)
         with static_plots_row1[0]:
@@ -154,6 +161,12 @@ def main():
 
         with static_plots_row1[1]:
             st.plotly_chart(static2, use_container_width=True, key = 'PointsByType')
+
+        with static_plots_row2[0]:
+            st.plotly_chart(pos_plots['batters'], use_container_width=True, key='allBattersPoints')
+
+        with static_plots_row2[1]:
+            st.plotly_chart(pos_plots['pitchers'], use_container_width=True, key = 'allPitchersPoints')
         
 
 if __name__ == "__main__":
