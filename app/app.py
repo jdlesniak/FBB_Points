@@ -12,7 +12,7 @@ sys.path.append('/Users/John/Documents/allProjects/FBB_Points/app/')
 from calcPoints import *
 
 def main():
-    local = True
+    local = os.path.isfile('/Users/John/Documents/allProjects/data_hidden/FBB_Points/clean/allClean.csv')
     print(local)
     
     st.title("Fantasy Baseball Points Projections via ZiPS DC")
