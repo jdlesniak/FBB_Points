@@ -27,6 +27,12 @@ def main():
     """, unsafe_allow_html=True)
     st.markdown(""" """)
 
+    st.subheader("Instructions:")
+    st.markdown("""Enter your league information, including player positions for your starting lineup and scoring. Next,
+    click submit. The projected points based on ZiPS DC and my blown saves model will be calculated and returned in a downloadable
+    table. Below that there are plots showing scoring by position and some key thresholds based on your league-specific settings.
+                """)
+
     st.subheader("Enter League Information")
     league_info = {}
     tcols = st.columns(10)
