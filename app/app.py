@@ -3,6 +3,7 @@ import requests
 import sys
 
 import streamlit as st
+st.set_page_config(layout="wide")
 import pandas as pd
 import numpy as np
 import streamlit.components.v1 as components
@@ -10,6 +11,7 @@ import streamlit.components.v1 as components
 sys.path.append('/Users/John/Documents/allProjects/FBB_Points/app/')
 
 from calcPoints import *
+from renderPlots import *
 
 def main():
     local = os.path.isfile('/Users/John/Documents/allProjects/data_hidden/FBB_Points/clean/allClean.csv')
@@ -17,7 +19,7 @@ def main():
     
     st.title("Fantasy Baseball Points Projections via ZiPS DC")
     st.markdown("""This app uses ZiPS DC projections to project player points based on your league's scoring settings and number of teams. 
-    ZiPs does not project blown saves, therefore I tried a few ML methods to estimate blown saves based on relief pitcher attributes.
+    ZiPS does not project blown saves, therefore I tried a few ML methods to estimate blown saves based on relief pitcher attributes.
     If a value isn't relevant to your league, then set the points to zero. The app will still function""")
     st.markdown("""""")
     st.markdown("""    Happy drafting! The spring is upon us. If you have questions, my contact information is on gitHub, as is my other work.
@@ -143,6 +145,8 @@ def main():
         
         ## show dataframe
         st.dataframe(df, hide_index = True)
+        figout = points_by_round(df, league_info['nTeams'])
+        st.plotly_chart(figout)
         
 
 if __name__ == "__main__":
