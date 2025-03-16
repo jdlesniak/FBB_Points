@@ -145,13 +145,14 @@ def main():
         
         ## show dataframe
         st.dataframe(df, hide_index = True)
-        static_plots = st.columns(2)
+        static_plots_row1 = st.columns(2)
+        static_plots_row2 = st.columns(2)
         static1 = points_by_round(df, league_info['nTeams'])
         static2 = render_distplot(df)
-        with static_plots[0]:
+        with static_plots_row1[0]:
             st.plotly_chart(static1, use_container_width=True, key='pointsPerRound')
 
-        with static_plots[1]:
+        with static_plots_row1[1]:
             st.plotly_chart(static2, use_container_width=True, key = 'PointsByType')
         
 
