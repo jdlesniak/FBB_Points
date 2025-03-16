@@ -12,25 +12,34 @@ sys.path.append('/Users/John/Documents/allProjects/FBB_Points/app/')
 from calcPoints import *
 
 def main():
-    local = False
+    local = True
     print(local)
-    nTeams = 14
     
-    st.title("Fantasy Baseball Points Projections")
-    st.write("This app uses ZiPS projections to project player points based on your league's scoring settings and number of teams.")
-    
-    # Custom styling to change the width of number input
-    st.markdown("""
-        <style>
-            div[data-testid="stNumberInput"] input {
-                width: 100px !important;
-            }
-        </style>
+    st.title("Fantasy Baseball Points Projections via ZiPS DC")
+    st.markdown("""This app uses ZiPS DC projections to project player points based on your league's scoring settings and number of teams. 
+    ZiPs does not project blown saves, therefore I tried a few ML methods to estimate blown saves based on relief pitcher attributes.
+    If a value isn't relevant to your league, then set the points to zero. The app will still function""")
+    st.markdown("""""")
+    st.markdown("""    Happy drafting! The spring is upon us. If you have questions, my contact information is on gitHub, as is my other work.
+    [My Github](https://github.com/jdlesniak)
     """, unsafe_allow_html=True)
-    st.write("Enter Number of Teams")
+    st.markdown(""" """)
+
+    st.subheader("Enter League Information")
+    league_info = {}
     tcols = st.columns(10)
-    nTeams = tcols[0].number_input("Number of Teams:", min_value = 1, max_value = 30, value=12, step = 1)
-    st.write("Input Batter Values")
+    league_info['nTeams'] = tcols[0].number_input("Teams:", min_value = 1, max_value = 30, value=12, step = 1)
+    league_info['C'] = tcols[1].number_input("C:", min_value = 1, max_value = 3, value=1, step = 1)
+    league_info['1B'] = tcols[2].number_input("1B:", min_value = 1, max_value = 3, value=1, step = 1)
+    league_info['2B'] = tcols[3].number_input("2B:", min_value = 1, max_value = 3, value=1, step = 1)
+    league_info['3B'] = tcols[4].number_input("3B:", min_value = 1, max_value = 3, value=1, step = 1)
+    league_info['SS'] = tcols[5].number_input("SS:", min_value = 1, max_value = 3, value=1, step = 1)
+    league_info['OF'] = tcols[6].number_input("OF:", min_value = 1, max_value = 7, value=4, step = 1)
+    league_info['SP'] = tcols[7].number_input("SP:", min_value = 1, max_value = 10, value=5, step = 1)
+    league_info['RP'] = tcols[8].number_input("RP:", min_value = 1, max_value = 5, value=2, step = 1)
+    
+    
+    st.subheader("Input Batter Values")
     # Creating 10 number input fields in a single row
     bcols = st.columns(10)
     batter_labels = ["1B", "2B", "3B", "HR", "R", "RBI", "BB", "SB", "CS", "HBP"]
@@ -38,7 +47,7 @@ def main():
     batter_values = [bcols[i].number_input(f"{batter_labels[i]}:", min_value=-5.0, max_value=10.0,
                      value=float(batter_defaults[i]), step=0.5, format="%.1f") for i in range(10)]
 
-    st.write("Input Pitcher Values")
+    st.subheader("Input Pitcher Values")
     # Creating 8 number input fields in a single row
     pcols = st.columns(10)
     pitcher_labels = ["W", "IP", "HLD", "SV", "K", "ER", "BS"]
@@ -51,7 +60,7 @@ def main():
         values_array = np.array(batter_values + pitcher_values)
         
         ## calcualte the points
-        df = calculate_points(values_array, nTeams, local)
+        df = calculate_points(values_array, league_info['nTeams'], local)
         
         ## log the df in the session_state
         st.session_state.df = df
