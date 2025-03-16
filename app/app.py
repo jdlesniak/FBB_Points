@@ -103,6 +103,10 @@ def main():
             st.session_state.adp_operator = '>'
             st.session_state.points_value = 0
             st.session_state.points_operator = '>'
+            st.session_state.dynamic_selectbox1 = 'C'
+            st.session_state.dynamic_selectbox2 = '1B'
+            st.session_state.dynamic_plot1 = None
+            st.session_state.dynamic_plot2 = None
             st.rerun()
 
         # Load session state or set defaults
@@ -120,6 +124,16 @@ def main():
             st.session_state.points_value = 0
         if "points_operator" not in st.session_state:
             st.session_state.points_operator = '>'
+        
+        ## new
+        if "dynamic_selectbox1" not in st.session_state:
+            st.session_state.dynamic_selectbox1 = 'C'
+        if "dynamic_selectbox1" not in st.session_state:
+            st.session_state.dynamic_selectbox2 = '1B'
+        if "dynamic_plot1" not in st.session_state:
+            st.session_state.dynamic_plot1 = None
+        if "dynamic_plot2" not in st.session_state:
+            st.session_state.dynamic_plot2 = None
 
         if name_filter:
             df = df[df['Name'].str.contains(name_filter, case=False, na=False)]
@@ -162,11 +176,34 @@ def main():
         with static_plots_row1[1]:
             st.plotly_chart(static2, use_container_width=True, key = 'PointsByType')
 
+        ## set the second static row
         with static_plots_row2[0]:
             st.plotly_chart(pos_plots['batters'], use_container_width=True, key='allBattersPoints')
 
         with static_plots_row2[1]:
             st.plotly_chart(pos_plots['pitchers'], use_container_width=True, key = 'allPitchersPoints')
+
+        ## add in some selectboxes
+        sb_values = ['C','1B','2B','3B','SS','OF','SP','RP']
+        sb_plot_cols = st.columns(2)
+        with sb_plot_cols[0]:
+            selected_plot1 = st.selectbox("Select Position for Plot 1:", sb_values, key="dynamic_selectbox1")
+
+        with sb_plot_cols[1]:
+            selected_plot2 = st.selectbox("Select Position for Plot 2:", sb_values, key="dynamic_selectbox2")
+
+        ## set session states and plot updates
+        st.session_state.dynamic_plot1 = pos_plots[selected_plot1]
+        st.session_state.dynamic_plot2 = pos_plots[selected_plot2]
+
+        dynamic_plot_row = st.columns(2)
+        with dynamic_plot_row[0]:
+            if st.session_state.dynamic_plot1:
+                st.plotly_chart(st.session_state.dynamic_plot1, use_container_width=True, key="dynamic_plot1")
+
+        with dynamic_plot_row[1]:
+            if st.session_state.dynamic_plot2:
+                st.plotly_chart(st.session_state.dynamic_plot2, use_container_width=True, key="dynamic_plot2")
         
 
 if __name__ == "__main__":
