@@ -50,7 +50,7 @@ def get_indiv_plot_trace(df, pos, value, nTeams, ymin, ymax, bigFig):
                         xaxis_range = [1,round(nTeams*value*2.5)],
                         yaxis_range = [ymin,ymax])
     fig.update_traces(line=dict(color='rgb(33, 148, 89)'))
-    fig.add_vline(x=round(value*nTeams), line_width=2, line_dash="dash", line_color="black", annotation_text = 'Lowest Starter')
+    fig.add_vline(x=round(value*nTeams), line_width=2, line_dash="dash", line_color="orange", annotation_text = 'Lowest Starter')
     fig.add_vline(x=round((value*nTeams)/2), line_width=2, line_dash="dash", line_color="blue", annotation_text= 'Midpoint Starter')
     
     ## add trace to bigFig
