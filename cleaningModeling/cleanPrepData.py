@@ -189,5 +189,11 @@ def main():
     writePickle(vars['data_clean'], 'battersClean.pkl', battersClean)
     writePickle(vars['data_clean'], 'allClean.pkl', allClean)
 
+    fileName = vars['data_clean'] + '/ProjectionsFinal2025.xlsx'
+    with pd.ExcelWriter(fileName, engine='xlsxwriter') as writer:
+        allClean.to_excel(writer, sheet_name = "All")
+        for pos in ['C','1B','2B', '3B', 'SS', 'OF', 'SP', 'RP']:
+            allClean[allClean['POS'].str.contains(pos)].to_excel(writer, sheet_name = pos)
+
 if __name__ == '__main__':
     main()
