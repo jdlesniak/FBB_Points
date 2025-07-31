@@ -1,33 +1,64 @@
-# FBB_Points
-Fantasy baseball points projections via ZiPS
-*Note: Data are not included in this repository. FanGraphs requires a membership to access these data, therefore I will not be providing the data for free.*
+ FBB_Points
 
-### Project Purpose:
-Every year a few million people participate in fantasy baseball drafts. Many of them put hours of research and preparation to identify the best players, best value, and any potential deep sleepers. This project aims to help fantasy baseball GMs estimate the points their players will score with any custom league settings.
+**Custom Fantasy Baseball Points Projections Using ZiPS**
 
-### The Data:
-I purchased the ZiPS data via a subscription from FanGraphs. I used these projections as the "true" value of each player's production. Obviously, they are projections and are subject to error. Dan Szymborski does a wonderful job with his projections, you can find his 2025 introduction [here.](https://blogs.fangraphs.com/the-2025-zips-projections-are-imminent/) If you love baseball enough to care about fantasy projections, then you'll love his writing.
+A customizable tool to help fantasy baseball managers estimate player value using FanGraphs ZiPS projections and any league-specific scoring system.
 
-It is important to note that the projections are the median projection from many simulations. The median is not always the best way to describe a distribution. Consider the distribution for an imaginary player below. The x-axis shows that they have an equally likely "good" outcome and "bad" outcome, with a median that is unlikely to occur. Clearly, the median is unlikely to occur, yet, that's the chosen point. 
+---
+
+## Overview
+
+Every year, millions of fantasy baseball managers prepare for their drafts by researching player stats, trends, and projections. This project helps streamline that process by allowing users to calculate custom fantasy point totals for players based on **your own scoring rules**, using **ZiPS** as the projection source.
+
+Note: This repository does **not** include player projection data. FanGraphs requires a subscription to download ZiPS data, and redistribution is not permitted.
+
+---
+
+## Project Purpose
+
+This project is designed to:
+
+- Translate ZiPS projections into fantasy point estimates
+- Allow full customization of scoring rules
+- Provide a repeatable, transparent workflow for evaluating player value
+
+Whether you're preparing for a draft or managing your roster mid-season, this tool helps surface value and risk based on actual projected outcomes.
+
+---
+
+## Data Source
+
+The data comes from **ZiPS projections** by Dan Szymborski, available via [FanGraphs](https://www.fangraphs.com). These projections represent the **median outcome** from a distribution of simulations for each player.
+
+While medians offer a stable and interpretable estimate, they may not fully reflect volatility. For example, the figure below illustrates a bimodal distribution where the median outcome is unlikely to occur.
 
 ![BiModal](https://github.com/user-attachments/assets/e07814ac-f84f-4563-8e87-6e9583952584)
 
-If this distribution were real, it could represent a highly-talented player that is proportionately injury-prone. If they stay healthy, then they are going to produce, but that's a big "if" for this player.
+This type of distribution might represent a highly talented but injury-prone player. If they stay healthy, they produce; if not, they underperform. The median is a compromise between those extremes.
 
-Nevertheless, all projected values will use the median observed outcome because that is Dan Szymborski's approach.
+Despite these limitations, we rely on the median because it's the value ZiPS provides, and it serves as a fair baseline for consistent scoring estimates.
 
-##### The One Exception
-ZiPS does not provide an estimate for blown saves. I tried a few models and put in some predicted values. There are leagues that give negative points for a blown save, so I'd like to consider that in these projections. Feel free to read through that code and critique my methods if you'd like.
+---
 
-##### One last note on the data
-I will not be providing a csv of the projections for anyone else to use. Fangraphs requires a subscription to download these projections, therefore I am not permitted to distribute them for free. Subscriptions last 30 days and are $10 as of writing this document. You are welcome to support FanGraphs and Dan Szymborski by signing up for a subscription. I think their content is worth supporting.
+## Blown Saves Exception
 
+ZiPS does not include a projection for **blown saves**, a stat that often results in negative points in many leagues. To account for this, I implemented a simple model to predict blown saves based on available data. You're welcome to review, critique, or improve that approach.
 
-### Stats Considered:
+---
 
-##### Batters:
-- tk
+## Data Licensing
 
-##### Pitchers:
-- tk
+This project does not provide any ZiPS projection data.
 
+- FanGraphs requires a paid membership to access these projections.
+- Redistribution of their data violates their terms of service.
+- As of writing, a 30-day membership costs $10.
+- I strongly encourage supporting FanGraphs and Dan Szymborski’s work by subscribing.
+
+---
+
+## Using the App
+
+You can try the live version of the app here:
+
+**[Live Streamlit App](https://fbbpoints-jlesniak-public.streamlit.app/)**
