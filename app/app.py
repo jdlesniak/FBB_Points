@@ -149,9 +149,9 @@ def main():
             df = df[df['POS'].str.contains(pos_filter, case = False, na = False)]
         if adp_value > 1:  # Apply ADP filter if a valid number is entered
             if adp_operator == ">":
-                df = df[df["ADP"] > adp_value]
+                df = df[pd.to_numeric(df["ADP"], errors = 'coerce') > adp_value]
             elif adp_operator == "<":
-                df = df[df["ADP"] < adp_value]
+                df = df[pd.to_numeric(df["ADP"], errors = 'coerce') < adp_value]
         
         if points_value > 0:  # Apply Points Filter
             if points_operator == ">":
